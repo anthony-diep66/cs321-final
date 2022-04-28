@@ -2,6 +2,20 @@ package cs321.btree;
 
 public class TreeObject<E>{
 
+    private long data;
+    private int frequencyCount;
+
+    TreeObject(long substringInDigits){
+        this.data = substringInDigits;
+        this.frequencyCount = 0;
+    }
+
+    TreeObject(String substring){
+        long longData = convertToLong(substring);
+        this.data = longData;
+        this.frequencyCount = 0;
+    }
+             
 
     /**
      * convertToLong - Converts the given substring into a long
@@ -12,25 +26,25 @@ public class TreeObject<E>{
      */
     static long convertToLong(String substring){
         String res = "";
-        for(int i = 0; i < substring.length; i++){
-            String letter = substring.charAt(i);
+        for(int i = 0; i < substring.length(); i++){
+            char letter = substring.charAt(i);
 
             switch( letter ){
-                case "A":
+                case 'A':
                     res += "00";
                     break;
-                case "T":
+                case 'T':
                     res += "11";
                     break;
-                case "C":
+                case 'C':
                     res += "01";
                     break;
-                case "G":
+                case 'G':
                     res += "01";
                     break;
                 default:
-                    System.out.println("ERROR: unexpected character encountered in \"convertToLong\" function... exiting\n");
-                    exit(1);
+                    System.out.println("ERROR: unexpected character encountered in \"convertToLong\" method... exiting\n");
+                    System.exit(1);
             }
         }
 
@@ -46,24 +60,25 @@ public class TreeObject<E>{
      * @param substringInDigits
      * @return
      */
-    static long convertToString(long substringInDigits){
+    
+    static String convertToString(long substringInDigits){
         String res = "";
         String inputAsString = String.valueOf(substringInDigits);
 
         // length of inputAsString should be even
-        if( inputAsString.length % 2 != 0 ){
+        if( inputAsString.length() % 2 != 0 ){
             System.out.println("ERROR: length of substringInDigits = " + inputAsString.length() + " (should be even)");
-            exit(1);
+            System.exit(1);
         }
 
         // since each letter takes two digits, iterate by 2
-        for(int i = 0; i < inputAsString.length; i += 2){   
+        for(int i = 0; i < inputAsString.length(); i += 2){   
             
             // take two digits at a time, check which character it corresponds to, and append to res
-            String c1 = inputAsString.charAt(i);
-            String c2 = inputAsString.charAt(i + 1);
-
-            switch( c1+c2 ){
+            String c1 = String.valueOf(inputAsString.charAt(i));
+            String c2 = String.valueOf(inputAsString.charAt(i + 1));
+        
+            switch( c1 + c2 ){
                 case "00":
                     res += "A";
                     break;
@@ -77,13 +92,13 @@ public class TreeObject<E>{
                     res += "G";
                     break;
                 default:
-                    System.out.println("ERROR: unexpected character encountered in \"convertToString\" function... exiting\n");
-                    exit(1);
+                    System.out.println("ERROR: unexpected character encountered in \"convertToString\" method... exiting\n");
+                    System.exit(1);
             }
         }
 
         return res;
 
     }
-
+    
 }
