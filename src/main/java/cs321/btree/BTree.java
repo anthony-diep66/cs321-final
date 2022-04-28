@@ -1,7 +1,14 @@
 package cs321.btree;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 
-public class BTree{
+public class BTree<E>{
 
+	private int META_SIZE = 0;
+	private long nextAddress = META_SIZE;
+	private FileChannel file;
+	private ByteBuffer buffer;
+	
     private int degree;
     private int lengthOfSubstring;      // 1<= k <= 31
     private BTreeNode root;                   // pointer should be of type "int"
@@ -11,6 +18,48 @@ public class BTree{
             this.lengthOfSubstring = substringLength;
             this.root = null;
     }
+	
+	// Fill up TreeObject keys
+	// If filled -> make a new BTreeNode and add to children 
+	
+	public void insertNonful(BTreeNode node, Long key) {
+		int i = node.n;
+		
+		if(node.isLeaf()) {
+			while(i>= 1 && key < node.keys[i].key) {
+				node.keys[i+1] = node.keys[i];
+				i--;
+			}
+			
+			node.keys[i+1].key = key;
+			node.n++;
+			DiskWrite(node);
+		} else {
+			while(i >= 1 && key < node.keys[i].key) {
+				i--;
+			}
+			
+			i++;
+			DiskRead(node.children[i]);
+			
+			if(node.children[i].n == 2*t - 1) {
+				Split(node.children[i]);
+				if(key > node.keys[i].key) {
+					i++;
+				}
+			}
+			
+			insertNonful(node.children[i],key);
+		}
+	}
+	
+	public void DiskWrite(BTreeNode node) throws IOException{
+		
+	}
+	
+	public void DiskRead(long address) throw IOException{
+		
+	}
 
     /**
      * (NEEDS TO BE TESTED) - I suspect there might be some indexing issues, especially 
@@ -117,3 +166,4 @@ public class BTree{
 
 
 }
+
