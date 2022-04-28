@@ -1,17 +1,21 @@
 package cs321.btree;
 
-public class TreeObject<E>{
+public class TreeObject{
 
-	Long key;
-	private final Long val;
-	private int frequency;
-	
-	
-	public TreeObject(Long key, Long val) {
-		this.key = key;
-		this.val = val;
-		this.frequency = 1;
-	}
+    private long data;
+    private int frequencyCount;
+
+    TreeObject(long substringInDigits){
+        this.data = substringInDigits;
+        this.frequencyCount = 1;
+    }
+
+    TreeObject(String substring){
+        long longData = convertToLong(substring);
+        this.data = longData;
+        this.frequencyCount = 1;
+    }
+            
     /**
      * convertToLong - Converts the given substring into a long
      *      returns a long, throws error if substring contains anything
@@ -38,8 +42,8 @@ public class TreeObject<E>{
                     res += "01";
                     break;
                 default:
-                    System.out.println("ERROR: unexpected character encountered in \"convertToLong\" function... exiting\n");
-                    exit(1);
+                    System.out.println("ERROR: unexpected character encountered in \"convertToLong\" method... exiting\n");
+                    System.exit(1);
             }
         }
 
@@ -55,24 +59,25 @@ public class TreeObject<E>{
      * @param substringInDigits
      * @return
      */
-    static long convertToString(long substringInDigits){
+    
+    static String convertToString(long substringInDigits){
         String res = "";
         String inputAsString = String.valueOf(substringInDigits);
 
         // length of inputAsString should be even
         if( inputAsString.length() % 2 != 0 ){
             System.out.println("ERROR: length of substringInDigits = " + inputAsString.length() + " (should be even)");
-            exit(1);
+            System.exit(1);
         }
 
         // since each letter takes two digits, iterate by 2
         for(int i = 0; i < inputAsString.length(); i += 2){   
             
             // take two digits at a time, check which character it corresponds to, and append to res
-            String c1 = inputAsString.charAt(i);
-            String c2 = inputAsString.charAt(i + 1);
-
-            switch( c1+c2 ){
+            String c1 = String.valueOf(inputAsString.charAt(i));
+            String c2 = String.valueOf(inputAsString.charAt(i + 1));
+        
+            switch( c1 + c2 ){
                 case "00":
                     res += "A";
                     break;
@@ -86,8 +91,8 @@ public class TreeObject<E>{
                     res += "G";
                     break;
                 default:
-                    System.out.println("ERROR: unexpected character encountered in \"convertToString\" function... exiting\n");
-                    exit(1);
+                    System.out.println("ERROR: unexpected character encountered in \"convertToString\" method... exiting\n");
+                    System.exit(1);
             }
         }
 
@@ -95,4 +100,56 @@ public class TreeObject<E>{
 
     }
 
+    public int compareTo(TreeObject other){
+	
+	long rValue = this.data - other.getDataAsLong();
+	if( rValue > 0 ){
+		return 1;
+	}
+	else if( rValue == 0 ){
+		return 0;
+	}
+	else{
+		return -1;
+	}
 
+    }
+
+    public String toString() {
+	return "TreeObject[value = " + this.data + ", frequency = " + this.frequencyCount + "]";
+	
+    }
+
+    /**
+     * returns this object's data as a long
+     * @return
+     */
+    long getDataAsLong(){
+        return this.data;
+    }
+
+    /**
+     * returns this object's data as a String
+     * @return
+     */
+    String getDataAsString(){
+        return convertToString(this.data);
+    }
+
+    /**
+     * return this object's frequency count
+     * @return
+     */
+    int getFrequencyCount(){
+        return this.frequencyCount;
+    }
+
+    /**
+     * increment this.frequencyCount by 1
+     */
+    void incrementFrequencyCount(){
+        this.frequencyCount++;
+    }
+
+
+}
