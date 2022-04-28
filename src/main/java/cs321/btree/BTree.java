@@ -1,13 +1,13 @@
 package cs321.btree;
 
-public class BTree<E>{
+public class BTree{
 
-    private int orderOfTree;
+    private int degreeOfTree;
     private int lengthOfSubstring;      // 1<= k <= 31
-    private int root;                   // pointer should be of type "int"
+    private BTreeNode root;                   // pointer should be of type "int"
 
     BTree(int degree, int substringLength){
-            this.orderOfTree = order;
+            this.degreeOfTree = degree;
             this.lengthOfSubstring = substringLength;
             this.root = null;
     }

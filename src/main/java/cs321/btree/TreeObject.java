@@ -1,6 +1,6 @@
 package cs321.btree;
 
-public class TreeObject<E>{
+public class TreeObject{
 
     private long data;
     private int frequencyCount;
