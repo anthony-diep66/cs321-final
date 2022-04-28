@@ -7,13 +7,13 @@ public class TreeObject{
 
     TreeObject(long substringInDigits){
         this.data = substringInDigits;
-        this.frequencyCount = 0;
+        this.frequencyCount = 1;
     }
 
     TreeObject(String substring){
         long longData = convertToLong(substring);
         this.data = longData;
-        this.frequencyCount = 0;
+        this.frequencyCount = 1;
     }
              
 
@@ -99,6 +99,26 @@ public class TreeObject{
 
         return res;
 
+    }
+
+    public int compareTo(TreeObject other){
+	
+	long rValue = this.data - other.getDataAsLong();
+	if( rValue > 0 ){
+		return 1;
+	}
+	else if( rValue == 0 ){
+		return 0;
+	}
+	else{
+		return -1;
+	}
+
+    }
+
+    public String toString() {
+	return "TreeObject[value = " + this.data + ", frequency = " + this.frequencyCount + "]";
+	
     }
 
     /**
