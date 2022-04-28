@@ -54,13 +54,13 @@ public class BTree<E>{
 		}
 	}
 	
-	public void DiskWrite(BTreeNode node) throws IOException{
-		
-	}
-	
-	public void DiskRead(long address) throw IOException{
-		
-	}
+//	public void DiskWrite(BTreeNode node) throws IOException{
+//		
+//	}
+//	
+//	public void DiskRead(long address) throw IOException{
+//		
+//	}
 
     /**
      * (NEEDS TO BE TESTED) - I suspect there might be some indexing issues, especially 
