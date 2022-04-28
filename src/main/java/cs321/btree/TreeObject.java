@@ -2,7 +2,16 @@ package cs321.btree;
 
 public class TreeObject<E>{
 
-
+	Long key;
+	private final Long val;
+	private int frequency;
+	
+	
+	public TreeObject(Long key, Long val) {
+		this.key = key;
+		this.val = val;
+		this.frequency = 1;
+	}
     /**
      * convertToLong - Converts the given substring into a long
      *      returns a long, throws error if substring contains anything
@@ -12,20 +21,20 @@ public class TreeObject<E>{
      */
     static long convertToLong(String substring){
         String res = "";
-        for(int i = 0; i < substring.length; i++){
-            String letter = substring.charAt(i);
+        for(int i = 0; i < substring.length(); i++){
+            char letter = substring.charAt(i);
 
             switch( letter ){
-                case "A":
+                case 'A':
                     res += "00";
                     break;
-                case "T":
+                case 'T':
                     res += "11";
                     break;
-                case "C":
+                case 'C':
                     res += "01";
                     break;
-                case "G":
+                case 'G':
                     res += "01";
                     break;
                 default:
@@ -51,13 +60,13 @@ public class TreeObject<E>{
         String inputAsString = String.valueOf(substringInDigits);
 
         // length of inputAsString should be even
-        if( inputAsString.length % 2 != 0 ){
+        if( inputAsString.length() % 2 != 0 ){
             System.out.println("ERROR: length of substringInDigits = " + inputAsString.length() + " (should be even)");
             exit(1);
         }
 
         // since each letter takes two digits, iterate by 2
-        for(int i = 0; i < inputAsString.length; i += 2){   
+        for(int i = 0; i < inputAsString.length(); i += 2){   
             
             // take two digits at a time, check which character it corresponds to, and append to res
             String c1 = inputAsString.charAt(i);
@@ -86,4 +95,4 @@ public class TreeObject<E>{
 
     }
 
-}
+
