@@ -101,6 +101,13 @@ public class TreeObject{
 
     }
 
+    /**
+     * compareTo - Compares this TreeObject with other. 
+     *      Returns 1, 0, or -1 if this node is greater than,
+     *      equal to, or less than other respectively
+     * @param other
+     * @return
+     */
     public int compareTo(TreeObject other){
 	
 	long rValue = this.data - other.getDataAsLong();

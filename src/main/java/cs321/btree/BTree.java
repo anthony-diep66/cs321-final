@@ -63,6 +63,40 @@ public class BTree{
 
     }
 
+    /**
+     * (NEEDS TO BE TESTED) - I'm 95% confident that this method is correct
+     *
+     * search - Recursively searches the BTree by iterating through start
+     *      to see if it contains a matchiing targetKey. If it finds a match,
+     *      this method increments the TreeObject's frequencyCount.
+     *
+     *      Returns the desired TreeObject (with the incremented frequencyCount) if
+     *      this method finds a match and null if search miss
+     * 
+     * @param start
+     * @param targetKey
+     * @return
+     */
+    TreeObject search(BTreeNode start, String targetKey){
+        int i = 0;
+        TreeObject targetNode = new TreeObject(targetKey);
+        while( i < start.getNumKeys() && targetNode.compareTo(start.getKeyAt(i)) == 1 ){
+            i++;
+        }
+        if( i < start.getNumKeys() && targetNode.compareTo(start.getKeyAt(i)) == 0 ){
+            start.getKeyAt(i).incrementFrequencyCount();
+            return start.getKeyAt(i);
+        } 
+        if( start.getLeafStatus() == true ){
+            return null;
+        }
+        else{
+            return search(start.getChildPointerAt(i), targetKey);
+        }
+    }
+
+    
+
 	
 
 
