@@ -100,5 +100,37 @@ public class TreeObject<E>{
         return res;
 
     }
-    
+
+    /**
+     * returns this object's data as a long
+     * @return
+     */
+    long getDataAsLong(){
+        return this.data;
+    }
+
+    /**
+     * returns this object's data as a String
+     * @return
+     */
+    String getDataAsString(){
+        return convertToString(this.data);
+    }
+
+    /**
+     * return this object's frequency count
+     * @return
+     */
+    int getFrequencyCount(){
+        return this.frequencyCount;
+    }
+
+    /**
+     * increment this.frequencyCount by 1
+     */
+    void incrementFrequencyCount(){
+        this.frequencyCount++;
+    }
+
+
 }
