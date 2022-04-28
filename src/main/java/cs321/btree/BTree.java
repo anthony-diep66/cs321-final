@@ -22,34 +22,35 @@ public class BTree<E>{
 	// Fill up TreeObject keys
 	// If filled -> make a new BTreeNode and add to children 
 	
-	public void insertNonful(BTreeNode node, Long key) {
-		int i = node.n;
+	public void insertNonful(BTreeNode node, long key) {
+		TreeObject temp = new TreeObject(key);
+		int i = node.getNumKeys();
 		
-		if(node.isLeaf()) {
-			while(i>= 1 && key < node.keys[i].key) {
-				node.keys[i+1] = node.keys[i];
+		if(node.getLeafStatus()) {
+			while(i>= 0 && temp.compareTo(node.getKeyAt(i)) < 0) {
+				node.setKeyAt(i + 1, node.getKeyAt(i));
 				i--;
 			}
 			
-			node.keys[i+1].key = key;
-			node.n++;
-			DiskWrite(node);
+			node.setKeyAt(i + 1, temp);
+			node.setNumKeys(node.getNumKeys() + 1);;
+			//DiskWrite(node);
 		} else {
-			while(i >= 1 && key < node.keys[i].key) {
+			while(i >= 1 && temp.compareTo(node.getKeyAt(i)) < 0) {
 				i--;
 			}
 			
 			i++;
-			DiskRead(node.children[i]);
+			//DiskRead(node.getChildPointerAt(i));
 			
-			if(node.children[i].n == 2*t - 1) {
-				Split(node.children[i]);
-				if(key > node.keys[i].key) {
+			if(node.getChildPointerAt(i).getNumKeys() == 2*degree - 1) {
+				split(node, node.getChildPointerAt(i), i);
+				if(temp.compareTo(node.getKeyAt(i)) > 0) {
 					i++;
 				}
 			}
 			
-			insertNonful(node.children[i],key);
+			insertNonful(node.getChildPointerAt(i),key);
 		}
 	}
 	
