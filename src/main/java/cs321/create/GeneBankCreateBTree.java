@@ -85,9 +85,9 @@ public class GeneBankCreateBTree
      * @throws IOException
      */
     static void parseFile(String fileName, int lengthOfSubstring) throws IOException{
-        BufferedReader br = new BufferedReader(new FileReader("test1.gbk"));
+        BufferedReader br = new BufferedReader(new FileReader(fileName));
         String line = "";
-        int k = 6; 
+        int k = lengthOfSubstring; 
         do{
             if( line.contains("ORIGIN") ){
                 while( line.equals("//") == false ){
@@ -116,4 +116,5 @@ public class GeneBankCreateBTree
         br.close();
     }
 }
-
+/*SOURCES TO BE ADDED TO README FILE*/
+//https://stackoverflow.com/questions/19183423/why-cant-i-access-the-first-token-returned-from-javas-stringtokenizer
