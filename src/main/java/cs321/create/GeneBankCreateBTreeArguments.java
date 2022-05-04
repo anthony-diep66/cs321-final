@@ -72,6 +72,14 @@ public class GeneBankCreateBTreeArguments
         }
         return true;
     }
+    
+    public int getDegree() {
+    	return this.degree;
+    }
+    
+    public int getSequenceLength() {
+    	return this.subsequenceLength;
+    }
 
     @Override
     public String toString()

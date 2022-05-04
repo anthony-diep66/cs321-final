@@ -11,8 +11,8 @@ public class BTreeNode {
     private int degree;
 
     BTreeNode(int degree){
-        this.keys = new TreeObject[degree - 1];
-        this.childPointers = new BTreeNode[degree];
+        this.keys = new TreeObject[2*degree - 1];
+        this.childPointers = new BTreeNode[2*degree];
         this.numKeys = 0;
         this.isLeaf = true;
         this.degree = degree;
