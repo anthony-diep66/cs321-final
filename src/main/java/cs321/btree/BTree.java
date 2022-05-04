@@ -13,10 +13,10 @@ public class BTree<E>{
     private int lengthOfSubstring;      // 1<= k <= 31
     private BTreeNode root;                   // pointer should be of type "int"
 
-    BTree(int degree, int substringLength){
+    public BTree(int degree, int substringLength){
             this.degree = degree;
             this.lengthOfSubstring = substringLength;
-            this.root = null;
+            this.root = new BTreeNode(degree);
     }
 	
 	// Fill up TreeObject keys
@@ -52,6 +52,41 @@ public class BTree<E>{
 			
 			insertNonful(node.getChildPointerAt(i),key);
 		}
+	}
+	
+	public void insertNonful(BTreeNode node, TreeObject temp) {
+		int i = node.getNumKeys();
+		
+		if(node.getLeafStatus()) {
+			while(i>= 0 && temp.compareTo(node.getKeyAt(i)) < 0) {
+				node.setKeyAt(i + 1, node.getKeyAt(i));
+				i--;
+			}
+			
+			node.setKeyAt(i + 1, temp);
+			node.setNumKeys(node.getNumKeys() + 1);;
+			//DiskWrite(node);
+		} else {
+			while(i >= 1 && temp.compareTo(node.getKeyAt(i)) < 0) {
+				i--;
+			}
+			
+			i++;
+			//DiskRead(node.getChildPointerAt(i));
+			
+			if(node.getChildPointerAt(i).getNumKeys() == 2*degree - 1) {
+				split(node, node.getChildPointerAt(i), i);
+				if(temp.compareTo(node.getKeyAt(i)) > 0) {
+					i++;
+				}
+			}
+			
+			insertNonful(node.getChildPointerAt(i),temp);
+		}
+	}
+	
+	public BTreeNode GetRoot() {
+		return this.root;
 	}
 	
 //	public void DiskWrite(BTreeNode node) throws IOException{
@@ -145,7 +180,7 @@ public class BTree<E>{
         }
     }
 
-    void print(BTreeNode startNode){
+    public void print(BTreeNode startNode){
 	if( startNode != null ){
 		if( startNode.getLeafStatus() == true ){
 		    for(int i = 0; i < startNode.getNumKeys(); i++){
