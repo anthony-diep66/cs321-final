@@ -37,43 +37,58 @@ public class GeneBankCreateBTree
 
     public static GeneBankCreateBTreeArguments parseArguments(String[] args) throws ParseArgumentException
     {
-        int debugLevel = 0;
-        if( args.length < 1 || args.length > 6 ){
+        int useCache = Integer.parseInt(args[0]);
+        int treeDegree = Integer.parseInt(args[1]);
+        String gbkFile = args[3];
+        int k = Integer.parseInt(args[4]);
+        int cacheSize;
+        int debugLevel;
+
+        int arg4;
+        if( args.length > 4 ){
+            if( args.length == 6 ){
+                debugLevel = Integer.parseInt(ars[5]);
+            }
+            else{
+                debugLevel = 0;
+            }
+            arg4 = Integer.parseInt(args[4]);
+
+            if( useCache == 1 && arg4 > 0 ){
+                cacheSize = Integer.parseInt(args[4]);
+            }
+           else if( useCache == 0 && arg4 <= 0 ){
+                printUsageAndExit("Cache size must be positive");
+           }
+
+        }
+
+        if( args.length < 4 || args.length > 6 ){
             throw new ParseArgumentException("Error while parsing arguments");
         }
+        if( !(useCache == 1 || useCache == 0) ){
+            printUsageAndExit("Cache option must either be 1 or 0");
+        }
+        if( treeDegree == 0 ){
+            treeDegree = calculateOptimalDegree();
+        }
+        else if( treeDegree < 0 ){
+            printUsageAndExit("Degree cannot be negative");
+        }
+        if( !(k < 1 || k > 31) ){
+            printUsageAndExit("Length of substrings must be between 1 or 31 inclusive");
+        }
 
-        //check if cache is needed
-        if( Integer.parseInt(args[0]) == 1 ){
-            if( args.length < 5 ){
-                throw new ParseArgumentException("Error: must specify a cache size if a cache is to be used");
-            }
-            else if( (args.length == 5) && (Integer.parseInt(args[5]) > 1) ){       //cache option chosen, no debug level (debug = 0)
-                return new GeneBankCreateBTreeArguments(true, Integer.parseInt(args[1]), args[2], 
-                                                    Integer.parseInt(args[3]), Integer.parseInt(args[4]), 0);
+        if( args.length > 4 ){
+            if( useCache == 1 ){
+                GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = new GeneBankCreateBTreeArguments(true, treeDegree, gbkFile, k, cacheSize, debugLevel);
             }
             else{
-                debugLevel = Integer.parseInt(args[6]);
-                return new GeneBankCreateBTreeArguments(true, Integer.parseInt(args[1]), args[2], 
-                                                    Integer.parseInt(args[3]), Integer.parseInt(args[4]), debugLevel);    
-                
+                GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = new GeneBankCreateBTreeArguments(false, treeDegree, gbkFile, k, cacheSize, debugLevel);
             }
         }
-        else{
-            if( args.length > 5 ){
-                throw new ParseArgumentException("Error: too many arguments");      // a cache size shouldnt be specified if no cache is chosen
-            }
-            else if (args.length == 5 ){
-                debugLevel = Integer.parseInt(args[5]);
-                return new GeneBankCreateBTreeArguments(true, Integer.parseInt(args[1]), args[2], 
-                                                    Integer.parseInt(args[3]), Integer.parseInt(args[4]), debugLevel);
-            }
-            else{
-                return new GeneBankCreateBTreeArguments(true, Integer.parseInt(args[1]), args[2], 
-                                                    Integer.parseInt(args[3]), Integer.parseInt(args[4]), debugLevel);
-            }
-
-        }
-  
+       
+        return GeneBankCreateBTree; 
     }
 
 /**
@@ -115,6 +130,13 @@ public class GeneBankCreateBTree
 
         br.close();
     }
+
+    static int calculateOptimalDegree(){
+        return 0;
+    }
 }
+
+
+
 /*SOURCES TO BE ADDED TO README FILE*/
 //https://stackoverflow.com/questions/19183423/why-cant-i-access-the-first-token-returned-from-javas-stringtokenizer
