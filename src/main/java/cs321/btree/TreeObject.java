@@ -10,7 +10,7 @@ public class TreeObject{
         this.frequencyCount = 1;
     }
 
-    TreeObject(String substring){
+    public TreeObject(String substring){
         long longData = convertToLong(substring);
         this.data = longData;
         this.frequencyCount = 1;

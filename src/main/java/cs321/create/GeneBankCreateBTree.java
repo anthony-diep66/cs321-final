@@ -1,17 +1,25 @@
+package cs321.create;
+
 import cs321.btree.BTree;
+import cs321.btree.BTreeNode;
+import cs321.btree.TreeObject;
 import cs321.common.ParseArgumentException;
 
 import java.io.*;
 import java.util.List;
+import java.util.StringTokenizer;
 
 public class GeneBankCreateBTree
 {
 
+	private static StringTokenizer tokenizer;
+	private static GeneBankCreateBTreeArguments geneBankArguments;
+	
     public static void main(String[] args) throws Exception
     {
         System.out.println("Hello world from cs321.create.GeneBankCreateBTree.main");
         GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = parseArgumentsAndHandleExceptions(args);
-
+        geneBankArguments = geneBankCreateBTreeArguments;
 
     }
 
@@ -103,8 +111,12 @@ public class GeneBankCreateBTree
         BufferedReader br = new BufferedReader(new FileReader(fileName));
         String line = "";
         int k = lengthOfSubstring; 
+        //Testing
+        BTree test = null;
         do{
             if( line.contains("ORIGIN") ){
+            	BTree tree = new BTree(geneBankArguments.getDegree(),geneBankArguments.getSequenceLength());
+            
                 while( line.equals("//") == false ){
                     line = br.readLine();  
                     tokenizer = new StringTokenizer(line);
@@ -119,14 +131,19 @@ public class GeneBankCreateBTree
                                     ////////
                                     //INSERT HERE
                                     /////// 
+                                	TreeObject currentKey = new TreeObject(substring);
+                                	tree.insertNonful(tree.GetRoot(), currentKey);
                                 }
                             }
                         }
                     }
                    
                 }
+                test = tree;
             }
         } while ( (line = br.readLine()) != null);
+        
+        test.print(test.GetRoot());
 
         br.close();
     }
