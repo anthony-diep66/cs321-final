@@ -49,13 +49,13 @@ public class GeneBankCreateBTree
         int treeDegree = Integer.parseInt(args[1]);
         String gbkFile = args[3];
         int k = Integer.parseInt(args[4]);
-        int cacheSize;
-        int debugLevel;
+        int cacheSize = 0;
+        int debugLevel = 0;
 
         int arg4;
         if( args.length > 4 ){
             if( args.length == 6 ){
-                debugLevel = Integer.parseInt(ars[5]);
+                debugLevel = Integer.parseInt(args[5]);
             }
             else{
                 debugLevel = 0;
@@ -65,7 +65,7 @@ public class GeneBankCreateBTree
             if( useCache == 1 && arg4 > 0 ){
                 cacheSize = Integer.parseInt(args[4]);
             }
-           else if( useCache == 0 && arg4 <= 0 ){
+            else if( useCache == 0 && arg4 <= 0 ){
                 printUsageAndExit("Cache size must be positive");
            }
 
@@ -87,16 +87,16 @@ public class GeneBankCreateBTree
             printUsageAndExit("Length of substrings must be between 1 or 31 inclusive");
         }
 
-        if( args.length > 4 ){
-            if( useCache == 1 ){
-                GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = new GeneBankCreateBTreeArguments(true, treeDegree, gbkFile, k, cacheSize, debugLevel);
-            }
-            else{
-                GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = new GeneBankCreateBTreeArguments(false, treeDegree, gbkFile, k, cacheSize, debugLevel);
-            }
+        GeneBankCreateBTreeArguments geneBankCreateBTreeArguments;
+        if( useCache == 1 ){
+            geneBankCreateBTreeArguments = new GeneBankCreateBTreeArguments(true, treeDegree, gbkFile, k, cacheSize, debugLevel);
         }
+        else{
+            geneBankCreateBTreeArguments = new GeneBankCreateBTreeArguments(false, treeDegree, gbkFile, k, cacheSize, debugLevel);
+        }
+
        
-        return GeneBankCreateBTree; 
+        return geneBankCreateBTreeArguments;
     }
 
 /**
