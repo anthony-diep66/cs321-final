@@ -181,23 +181,25 @@ public class BTree<E>{
     }
 
     public void print(BTreeNode startNode){
-	if( startNode != null ){
-		if( startNode.getLeafStatus() == true ){
-		    for(int i = 0; i < startNode.getNumKeys(); i++){
-			System.out.println(startNode.getChildPointerAt(i).toString());
-		    }
-		}
-		else{
-		    int i;
-		    for(i = 0; i < startNode.getNumKeys(); i++){
-			print(startNode.getChildPointerAt(i));
-		    }
+        if( startNode != null ){
+            if( startNode.getLeafStatus() == true ){
+                for(int i = 0; i < startNode.getNumKeys(); i++){
+                    System.out.println(startNode.getChildPointerAt(i).toString());
+                }
+            }
+            else{
+                int i;
+                for(i = 0; i < startNode.getNumKeys(); i++){
+                    print(startNode.getChildPointerAt(i));
+                    print(startNode.getChildPointerAt(i));
+                }
 
-		    System.out.println(startNode.getChildPointerAt(i).toString());
-		}
-	}
+                System.out.println(startNode.getChildPointerAt(i).toString());
+            }
+        }
 
-    }
+    
+    } 
  
 
 
