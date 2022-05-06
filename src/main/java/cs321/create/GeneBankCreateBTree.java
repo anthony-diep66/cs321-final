@@ -19,6 +19,7 @@ public class GeneBankCreateBTree
     {
         System.out.println("Hello world from cs321.create.GeneBankCreateBTree.main");
         GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = parseArgumentsAndHandleExceptions(args);
+        System.out.println(geneBankCreateBTreeArguments.toString());
         geneBankArguments = geneBankCreateBTreeArguments;
 
     }
@@ -47,8 +48,8 @@ public class GeneBankCreateBTree
     {
         int useCache = Integer.parseInt(args[0]);
         int treeDegree = Integer.parseInt(args[1]);
-        String gbkFile = args[3];
-        int k = Integer.parseInt(args[4]);
+        String gbkFile = args[2];
+        int k = Integer.parseInt(args[3]);
         int cacheSize = 0;
         int debugLevel = 0;
 
@@ -83,7 +84,8 @@ public class GeneBankCreateBTree
         else if( treeDegree < 0 ){
             printUsageAndExit("Degree cannot be negative");
         }
-        if( !(k < 1 || k > 31) ){
+        System.out.println("k = " + k);
+        if( !(k > 1 && k < 32) ){
             printUsageAndExit("Length of substrings must be between 1 or 31 inclusive");
         }
 
@@ -157,3 +159,4 @@ public class GeneBankCreateBTree
 
 /*SOURCES TO BE ADDED TO README FILE*/
 //https://stackoverflow.com/questions/19183423/why-cant-i-access-the-first-token-returned-from-javas-stringtokenizer
+
