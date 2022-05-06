@@ -4,6 +4,7 @@ public class TreeObject{
 
     private long data;
     private int frequencyCount;
+    private String dataAsString;
 
     TreeObject(long substringInDigits){
         this.data = substringInDigits;
@@ -14,6 +15,7 @@ public class TreeObject{
         long longData = convertToLong(substring);
         this.data = longData;
         this.frequencyCount = 1;
+        this.dataAsString = substring;
     }
             
     /**
@@ -26,7 +28,7 @@ public class TreeObject{
     static long convertToLong(String substring){
         String res = "";
         for(int i = 0; i < substring.length(); i++){
-            char letter = substring.charAt(i);
+            char letter = Character.toUpperCase(substring.charAt(i));
 
             switch( letter ){
                 case 'A':
@@ -46,9 +48,7 @@ public class TreeObject{
                     System.exit(1);
             }
         }
-
-        return Long.parseLong(res);
-
+        return Long.parseLong(res, 2);
     }
 
     /**
@@ -133,7 +133,7 @@ public class TreeObject{
      * @return
      */
     String getDataAsString(){
-        return convertToString(this.data);
+        return this.dataAsString;
     }
 
     /**
