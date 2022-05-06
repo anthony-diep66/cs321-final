@@ -94,4 +94,8 @@ public class GeneBankCreateBTreeArguments
                 ", debugLevel=" + debugLevel +
                 '}';
     }
+
+    public String getFileName() {
+        return null;
+    }
 }

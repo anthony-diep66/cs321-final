@@ -13,14 +13,15 @@ public class GeneBankCreateBTree
 {
 
 	private static StringTokenizer tokenizer;
-	private static GeneBankCreateBTreeArguments geneBankArguments;
+	private static GeneBankCreateBTreeArguments geneBankcreateBTreeArguments;
+    private static BTree tree;
 	
     public static void main(String[] args) throws Exception
     {
         System.out.println("Hello world from cs321.create.GeneBankCreateBTree.main");
         GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = parseArgumentsAndHandleExceptions(args);
         System.out.println(geneBankCreateBTreeArguments.toString());
-        geneBankArguments = geneBankCreateBTreeArguments;
+        geneBankCreateBTreeArguments = geneBankCreateBTreeArguments;
 
     }
 
@@ -116,15 +117,16 @@ public class GeneBankCreateBTree
      * @param lengthOfSubstring
      * @throws IOException
      */
-    static void parseFile(String fileName, int lengthOfSubstring) throws IOException{
-        BufferedReader br = new BufferedReader(new FileReader(fileName));
+    static void parseFile(GeneBankCreateBTreeArguments args) throws IOException{
+        
+        System.out.println(args.toString());
+        tree = new BTree(args.getDegree(), args.getSequenceLength());
+        BufferedReader br = new BufferedReader(new FileReader(args.getFileName()));
         String line = "";
-        int k = lengthOfSubstring; 
-        //Testing
-        BTree test = null;
+        int k = args.getSequenceLength(); 
+
         do{
             if( line.contains("ORIGIN") ){
-            	BTree tree = new BTree(geneBankArguments.getDegree(),geneBankArguments.getSequenceLength());
             
                 while( line.equals("//") == false ){
                     line = br.readLine();  
@@ -137,9 +139,6 @@ public class GeneBankCreateBTree
                                 String substring = sequence.substring(i, i+ k);
                                 if( substring.matches("[actgACTG]+") ){
                                     //System.out.println(substring);
-                                    ////////
-                                    //INSERT HERE
-                                    /////// 
                                 	TreeObject currentKey = new TreeObject(substring);
                                 	tree.insertNonful(tree.GetRoot(), currentKey);
                                 }
@@ -148,12 +147,9 @@ public class GeneBankCreateBTree
                     }
                    
                 }
-                test = tree;
             }
         } while ( (line = br.readLine()) != null);
         
-        test.print(test.GetRoot());
-
         br.close();
     }
 
