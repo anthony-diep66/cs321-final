@@ -57,19 +57,26 @@ public class GeneBankCreateBTree
         if( args.length > 4 ){
             if( args.length == 6 ){
                 debugLevel = Integer.parseInt(args[5]);
+                if( !(debugLevel == 1 || debugLevel == 0) ){
+                    printUsageAndExit("Debug level must be either 0 or 1");
+                }
             }
             else{
                 debugLevel = 0;
             }
             arg4 = Integer.parseInt(args[4]);
-
-            if( useCache == 1 && arg4 > 0 ){
-                cacheSize = Integer.parseInt(args[4]);
+            if( useCache == 1 ){
+                if( arg4 > 0 ){
+                    cacheSize = Integer.parseInt(args[4]);
+                }
+                else{
+                    printUsageAndExit("Cache size must be positive");
+                }
             }
-            else if( useCache == 0 && arg4 <= 0 ){
-                printUsageAndExit("Cache size must be positive");
-           }
-
+        }
+        
+        if( args.length == 4 && useCache == 1){
+            printUsageAndExit("A Cache size must be specified");
         }
 
         if( args.length < 4 || args.length > 6 ){
@@ -84,10 +91,10 @@ public class GeneBankCreateBTree
         else if( treeDegree < 0 ){
             printUsageAndExit("Degree cannot be negative");
         }
-        System.out.println("k = " + k);
         if( !(k > 1 && k < 32) ){
             printUsageAndExit("Length of substrings must be between 1 or 31 inclusive");
         }
+
 
         GeneBankCreateBTreeArguments geneBankCreateBTreeArguments;
         if( useCache == 1 ){
