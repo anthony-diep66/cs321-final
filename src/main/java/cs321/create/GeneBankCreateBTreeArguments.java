@@ -96,6 +96,6 @@ public class GeneBankCreateBTreeArguments
     }
 
     public String getFileName() {
-        return null;
+        return this.gbkFileName;
     }
 }
