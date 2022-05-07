@@ -1,4 +1,4 @@
-package cs321.btree;
+package cs321.common;
 
 import cs321.btree.TreeObject;
 import java.io.File;
