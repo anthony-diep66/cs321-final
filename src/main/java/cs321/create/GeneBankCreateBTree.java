@@ -20,7 +20,6 @@ public class GeneBankCreateBTree
 	
     public static void main(String[] args) throws Exception
     {
-        System.out.println("Hello world from cs321.create.GeneBankCreateBTree.main");
         GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = parseArgumentsAndHandleExceptions(args);
         System.out.println(geneBankCreateBTreeArguments.toString());
         geneBankCreateBTreeArguments = geneBankCreateBTreeArguments;
@@ -44,8 +43,19 @@ public class GeneBankCreateBTree
     private static void printUsageAndExit(String errorMessage)
     {
         System.out.println(errorMessage);
+        printInstructions();
         System.exit(1);
     }
+
+    static void printInstructions() {
+		System.err.println("Usage: java GeneBankCreateBTree <cache> <degree> <gbk file> <sequence length> [<cache size>] [<debuglevel>]");
+		System.err.println("<cache>: 0/1");
+		System.err.println("<degree>: degree of the BTree");
+		System.err.println("<gbk file>: GeneBank file");
+		System.err.println("<sequence length> length of each subsequence");
+		System.err.println("[<cache size>]: size of cache");
+		System.err.println("[<debug level>]: 0/1");
+	}
 
     public static GeneBankCreateBTreeArguments parseArguments(String[] args) throws ParseArgumentException
     {
@@ -76,6 +86,9 @@ public class GeneBankCreateBTree
                     printUsageAndExit("Cache size must be positive");
                 }
             }
+        }
+        else{
+            printUsageAndExit("Not enough arguments");
         }
         
         if( args.length == 4 && useCache == 1){
