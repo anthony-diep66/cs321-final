@@ -43,17 +43,17 @@ public class BTree{
                 s.setNumKeys(0);
                 s.setChildPointerAt(0, this.root);
                 split(s, s.getChildPointerAt(0), 0);
-                insertNonful(s, node.getDataAsLong());
+                insertNonfull(s, node.getDataAsLong());
             }
         }
         else{
-            insertNonful(rt, node.getDataAsLong());
+            insertNonfull(rt, node.getDataAsLong());
         }
     }
 
 	// Fill up TreeObject keys
 	// If filled -> make a new BTreeNode and add to children 
-	public void insertNonful(BTreeNode node, long key) {
+	public void insertNonfull(BTreeNode node, long key) {
 		TreeObject temp = new TreeObject(key);
 		int i = node.getNumKeys();
 		
@@ -81,41 +81,10 @@ public class BTree{
 				}
 			}
 			
-			insertNonful(node.getChildPointerAt(i),key);
+			insertNonfull(node.getChildPointerAt(i),key);
 		}
 	}
-	
-	public void insertNonful(BTreeNode node, TreeObject temp) {
-		int i = node.getNumKeys();
-		
-		if(node.getLeafStatus()) {
-			while(i>= 0 && temp.compareTo(node.getKeyAt(i)) < 0) {
-				node.setKeyAt(i + 1, node.getKeyAt(i));
-				i--;
-			}
-			
-			node.setKeyAt(i + 1, temp);
-			node.setNumKeys(node.getNumKeys() + 1);;
-			//DiskWrite(node);
-		} else {
-			while(i >= 1 && temp.compareTo(node.getKeyAt(i)) < 0) {
-				i--;
-			}
-			
-			i++;
-			//DiskRead(node.getChildPointerAt(i));
-			
-			if(node.getChildPointerAt(i).getNumKeys() == 2*degree - 1) {
-				split(node, node.getChildPointerAt(i), i);
-				if(temp.compareTo(node.getKeyAt(i)) > 0) {
-					i++;
-				}
-			}
-			
-			insertNonful(node.getChildPointerAt(i),temp);
-		}
-	}
-	
+
 	public BTreeNode GetRoot() {
 		return this.root;
 	}
