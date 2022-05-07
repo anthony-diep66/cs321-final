@@ -154,7 +154,16 @@ public class GeneBankCreateBTree
     }
 
     static int calculateOptimalDegree(){
-        return 0;
+        double optimum;		
+		int sizeOfPointer = 4;		
+		int sizeOfObject = 12;		
+		int sizeOfMetadata = 5;		
+		optimum = 4096;		
+		optimum += sizeOfObject;		
+		optimum -= sizeOfPointer;		
+		optimum -= sizeOfMetadata;		
+		optimum /= (2 * (sizeOfObject + sizeOfPointer));		
+		return (int) Math.floor(optimum);
     }
 }
 
