@@ -63,6 +63,10 @@ public class BTree{
 				i--;
 			}
 
+            if( i >= 0 && temp.compareTo(node.getKeyAt(i)) == 0 ){
+                node.getKeyAt(i).incrementFrequencyCount();
+            }
+
 			node.setKeyAt(i + 1, temp);
 			node.setNumKeys(node.getNumKeys() + 1);
 			//DiskWrite(node);
