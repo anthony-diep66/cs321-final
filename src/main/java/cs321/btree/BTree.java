@@ -2,7 +2,7 @@ package cs321.btree;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
-public class BTree<E>{
+public class BTree{
 
 	private int META_SIZE = 0;
 	private long nextAddress = META_SIZE;
@@ -18,16 +18,47 @@ public class BTree<E>{
             this.lengthOfSubstring = substringLength;
             this.root = new BTreeNode(degree);
     }
-	
+	/**
+     * insert - This method is to insert a given TreeObject obj into the current BTree.
+     *      If an obj with the same key is already inside the BTree, the method will 
+     *      call incrementFrequencyCount() on the obj of same key. 
+     * 
+     *      Does not return any value
+     * @param node
+     */
+    public void insert(TreeObject node){
+        BTreeNode rt = this.root;
+        int i = rt.getNumKeys();
+        if( i == 2*degree - 1 ){
+            while( i > 0 && node.compareTo(rt.getKeyAt(i-1)) < 0 ){
+                i--;
+            }
+            if( i > 0 && node.compareTo(rt.getKeyAt(i-1)) == 0 ){
+                rt.getKeyAt(i).incrementFrequencyCount();
+            }
+            else{
+                BTreeNode s = new BTreeNode(this.degree);
+                this.root = s;
+                s.setLeafStatus(false);
+                s.setNumKeys(0);
+                s.setChildPointerAt(0, this.root);
+                split(s, s.getChildPointerAt(0), 0);
+                insertNonful(s, node.getDataAsLong());
+            }
+        }
+        else{
+            insertNonful(rt, node.getDataAsLong());
+        }
+    }
+
 	// Fill up TreeObject keys
 	// If filled -> make a new BTreeNode and add to children 
-	
 	public void insertNonful(BTreeNode node, long key) {
 		TreeObject temp = new TreeObject(key);
 		int i = node.getNumKeys();
 		
 		if(node.getLeafStatus()) {
-			while(i>= 0 && temp.compareTo(node.getKeyAt(i)) < 0) {
+			while( i > 0 && temp.compareTo(node.getKeyAt(i)) < 0) {
 				node.setKeyAt(i + 1, node.getKeyAt(i));
 				i--;
 			}
