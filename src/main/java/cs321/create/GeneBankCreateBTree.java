@@ -1,9 +1,11 @@
-package cs321.create;
+/*package cs321.create;
 
 import cs321.btree.BTree;
 import cs321.btree.BTreeNode;
 import cs321.btree.TreeObject;
 import cs321.common.ParseArgumentException;
+*/
+
 
 import java.io.*;
 import java.util.List;
@@ -140,7 +142,7 @@ public class GeneBankCreateBTree
                                 if( substring.matches("[actgACTG]+") ){
                                     //System.out.println(substring);
                                 	TreeObject currentKey = new TreeObject(substring);
-                                	tree.insertNonful(tree.GetRoot(), currentKey);
+                                	tree.insertNonfull(tree.GetRoot(), currentKey.getDataAsLong());
                                 }
                             }
                         }
