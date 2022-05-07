@@ -55,10 +55,10 @@ public class BTree{
 	// If filled -> make a new BTreeNode and add to children 
 	public void insertNonfull(BTreeNode node, long key) {
 		TreeObject temp = new TreeObject(key);
-		int i = node.getNumKeys();
+		int i = node.getNumKeys() - 1;
 		
 		if(node.getLeafStatus()) {
-			while( i > 0 && temp.compareTo(node.getKeyAt(i)) < 0) {
+			while( i >= 0 && temp.compareTo(node.getKeyAt(i)) < 0) {
 				node.setKeyAt(i + 1, node.getKeyAt(i));
 				i--;
 			}
@@ -169,7 +169,6 @@ public class BTree{
             i++;
         }
         if( i < start.getNumKeys() && targetNode.compareTo(start.getKeyAt(i)) == 0 ){
-            start.getKeyAt(i).incrementFrequencyCount();
             return start.getKeyAt(i);
         } 
         if( start.getLeafStatus() == true ){
