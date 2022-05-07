@@ -31,12 +31,12 @@ public class BTree<E>{
 				node.setKeyAt(i + 1, node.getKeyAt(i));
 				i--;
 			}
-			
+
 			node.setKeyAt(i + 1, temp);
-			node.setNumKeys(node.getNumKeys() + 1);;
+			node.setNumKeys(node.getNumKeys() + 1);
 			//DiskWrite(node);
 		} else {
-			while(i >= 1 && temp.compareTo(node.getKeyAt(i)) < 0) {
+			while(i >= 0 && temp.compareTo(node.getKeyAt(i)) < 0) {
 				i--;
 			}
 			
