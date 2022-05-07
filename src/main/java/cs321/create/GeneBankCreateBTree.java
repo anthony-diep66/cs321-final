@@ -95,6 +95,7 @@ public class GeneBankCreateBTree
         if( !(k > 1 && k < 32) ){
             printUsageAndExit("Length of substrings must be between 1 or 31 inclusive");
         }
+        
 
 
         GeneBankCreateBTreeArguments geneBankCreateBTreeArguments;
@@ -150,6 +151,15 @@ public class GeneBankCreateBTree
             }
         } while ( (line = br.readLine()) != null);
         
+		if (args.getDebugLevel() > 0) {
+			File dumpFile = new File("dump");
+			dumpFile.delete();
+			dumpFile.createNewFile();
+			PrintWriter writer = new PrintWriter(dumpFile);
+			tree.printNode(tree.GetRoot(),writer, args.getSequenceLength());
+			writer.close();
+		}
+
         br.close();
     }
 

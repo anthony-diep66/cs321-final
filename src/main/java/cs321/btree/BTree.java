@@ -1,8 +1,10 @@
 package cs321.btree;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
-public class BTree<E>{
+public class BTree{
 
 	private int META_SIZE = 0;
 	private long nextAddress = META_SIZE;
@@ -200,6 +202,21 @@ public class BTree<E>{
 
     
     } 
+    
+    public void printNode(BTreeNode node, PrintWriter  writter, int sequenceLength) throws IOException{
+        for (int i = 0; i < node.getNumKeys(); i++){
+        	writter.print(node.getKeyAt(i).getFrequencyCount()+ " ");
+        	writter.println(node.getKeyAt(i).getDataAsString());
+        } if (!node.getLeafStatus()) {
+	        for (int i = 0; i < node.getNumKeys() + 1; ++i) {
+	        	printNode(node.getChildPointerAt(i),writter,sequenceLength);
+	            if (i < node.getNumKeys()) {
+	            	writter.print(node.getKeyAt(i).getFrequencyCount() + " ");
+	            	writter.println(node.getKeyAt(i).getDataAsString());
+	            }
+	        }
+        }
+    }
  
 
 
