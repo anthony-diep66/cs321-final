@@ -20,19 +20,54 @@ public class BTree{
             this.lengthOfSubstring = substringLength;
             this.root = new BTreeNode(degree);
     }
-	
+	/**
+     * insert - This method is to insert a given TreeObject obj into the current BTree.
+     *      If an obj with the same key is already inside the BTree, the method will 
+     *      call incrementFrequencyCount() on the obj of same key. 
+     * 
+     *      Does not return any value
+     * @param node
+     */
+    public void insert(TreeObject node){
+        BTreeNode rt = this.root;
+        int i = rt.getNumKeys();
+        if( i == 2*degree - 1 ){
+            while( i > 0 && node.compareTo(rt.getKeyAt(i-1)) < 0 ){
+                i--;
+            }
+            if( i > 0 && node.compareTo(rt.getKeyAt(i-1)) == 0 ){
+                rt.getKeyAt(i).incrementFrequencyCount();
+            }
+            else{
+                BTreeNode s = new BTreeNode(this.degree);
+                this.root = s;
+                s.setLeafStatus(false);
+                s.setNumKeys(0);
+                s.setChildPointerAt(0, this.root);
+                split(s, s.getChildPointerAt(0), 0);
+                insertNonfull(s, node.getDataAsLong());
+            }
+        }
+        else{
+            insertNonfull(rt, node.getDataAsLong());
+        }
+    }
+
 	// Fill up TreeObject keys
 	// If filled -> make a new BTreeNode and add to children 
-	
-	public void insertNonful(BTreeNode node, long key) {
+	public void insertNonfull(BTreeNode node, long key) {
 		TreeObject temp = new TreeObject(key);
-		int i = node.getNumKeys();
+		int i = node.getNumKeys() - 1;
 		
 		if(node.getLeafStatus()) {
-			while(i>= 0 && temp.compareTo(node.getKeyAt(i)) < 0) {
+			while( i >= 0 && temp.compareTo(node.getKeyAt(i)) < 0) {
 				node.setKeyAt(i + 1, node.getKeyAt(i));
 				i--;
 			}
+
+            if( i >= 0 && temp.compareTo(node.getKeyAt(i)) == 0 ){
+                node.getKeyAt(i).incrementFrequencyCount();
+            }
 
 			node.setKeyAt(i + 1, temp);
 			node.setNumKeys(node.getNumKeys() + 1);
@@ -52,41 +87,10 @@ public class BTree{
 				}
 			}
 			
-			insertNonful(node.getChildPointerAt(i),key);
+			insertNonfull(node.getChildPointerAt(i),key);
 		}
 	}
-	
-	public void insertNonful(BTreeNode node, TreeObject temp) {
-		int i = node.getNumKeys();
-		
-		if(node.getLeafStatus()) {
-			while(i>= 0 && temp.compareTo(node.getKeyAt(i)) < 0) {
-				node.setKeyAt(i + 1, node.getKeyAt(i));
-				i--;
-			}
-			
-			node.setKeyAt(i + 1, temp);
-			node.setNumKeys(node.getNumKeys() + 1);;
-			//DiskWrite(node);
-		} else {
-			while(i >= 1 && temp.compareTo(node.getKeyAt(i)) < 0) {
-				i--;
-			}
-			
-			i++;
-			//DiskRead(node.getChildPointerAt(i));
-			
-			if(node.getChildPointerAt(i).getNumKeys() == 2*degree - 1) {
-				split(node, node.getChildPointerAt(i), i);
-				if(temp.compareTo(node.getKeyAt(i)) > 0) {
-					i++;
-				}
-			}
-			
-			insertNonful(node.getChildPointerAt(i),temp);
-		}
-	}
-	
+
 	public BTreeNode GetRoot() {
 		return this.root;
 	}
@@ -171,7 +175,6 @@ public class BTree{
             i++;
         }
         if( i < start.getNumKeys() && targetNode.compareTo(start.getKeyAt(i)) == 0 ){
-            start.getKeyAt(i).incrementFrequencyCount();
             return start.getKeyAt(i);
         } 
         if( start.getLeafStatus() == true ){

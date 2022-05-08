@@ -1,9 +1,11 @@
-package cs321.create;
+/*package cs321.create;
 
 import cs321.btree.BTree;
 import cs321.btree.BTreeNode;
 import cs321.btree.TreeObject;
 import cs321.common.ParseArgumentException;
+*/
+
 
 import java.io.*;
 import java.util.List;
@@ -18,7 +20,6 @@ public class GeneBankCreateBTree
 	
     public static void main(String[] args) throws Exception
     {
-        System.out.println("Hello world from cs321.create.GeneBankCreateBTree.main");
         GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = parseArgumentsAndHandleExceptions(args);
         System.out.println(geneBankCreateBTreeArguments.toString());
         geneBankCreateBTreeArguments = geneBankCreateBTreeArguments;
@@ -42,8 +43,19 @@ public class GeneBankCreateBTree
     private static void printUsageAndExit(String errorMessage)
     {
         System.out.println(errorMessage);
+        printInstructions();
         System.exit(1);
     }
+
+    static void printInstructions() {
+		System.err.println("Usage: java GeneBankCreateBTree <cache> <degree> <gbk file> <sequence length> [<cache size>] [<debuglevel>]");
+		System.err.println("<cache>: 0/1");
+		System.err.println("<degree>: degree of the BTree");
+		System.err.println("<gbk file>: GeneBank file");
+		System.err.println("<sequence length> length of each subsequence");
+		System.err.println("[<cache size>]: size of cache");
+		System.err.println("[<debug level>]: 0/1");
+	}
 
     public static GeneBankCreateBTreeArguments parseArguments(String[] args) throws ParseArgumentException
     {
@@ -74,6 +86,9 @@ public class GeneBankCreateBTree
                     printUsageAndExit("Cache size must be positive");
                 }
             }
+        }
+        else{
+            printUsageAndExit("Not enough arguments");
         }
         
         if( args.length == 4 && useCache == 1){
@@ -141,7 +156,7 @@ public class GeneBankCreateBTree
                                 if( substring.matches("[actgACTG]+") ){
                                     //System.out.println(substring);
                                 	TreeObject currentKey = new TreeObject(substring);
-                                	tree.insertNonful(tree.GetRoot(), currentKey);
+                                	tree.insertNonfull(tree.GetRoot(), currentKey.getDataAsLong());
                                 }
                             }
                         }
@@ -164,7 +179,16 @@ public class GeneBankCreateBTree
     }
 
     static int calculateOptimalDegree(){
-        return 0;
+        double optimum;		
+		int sizeOfPointer = 4;		
+		int sizeOfObject = 12;		
+		int sizeOfMetadata = 5;		
+		optimum = 4096;		
+		optimum += sizeOfObject;		
+		optimum -= sizeOfPointer;		
+		optimum -= sizeOfMetadata;		
+		optimum /= (2 * (sizeOfObject + sizeOfPointer));		
+		return (int) Math.floor(optimum);
     }
 }
 
