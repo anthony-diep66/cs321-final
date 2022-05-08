@@ -80,6 +80,10 @@ public class GeneBankCreateBTreeArguments
     public int getSequenceLength() {
     	return this.subsequenceLength;
     }
+    
+    public int getDebugLevel() {
+    	return this.debugLevel;
+    }
 
     @Override
     public String toString()

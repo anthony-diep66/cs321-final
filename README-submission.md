@@ -3,7 +3,8 @@
 Last Name       | First Name      | GitHub User Name
 --------------- | --------------- | --------------------
 Weber           | Zachry          | zachry-weber
-Diep             | Anthony             | anthony-diep66
+Nguyen          | Tri             | triducnguyen
+Diep            | Anthony         | anthony-diep66
 TBD             | TBD             | TBD
 TBD             | TBD             | TBD
 TBD             | TBD             | TBD
