@@ -3,7 +3,7 @@
 **Table of contents:**
 - [Starter Code](#starter-code)
 - [Scrum Process](#scrum-process)
-- [Project Requirements](#project-requirements)
+- [Project Requirements](#project-requirements)	
 
 <hr/>
 

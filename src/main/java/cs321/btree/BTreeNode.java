@@ -1,6 +1,5 @@
 
-//package cs321.btree;
-package btree;
+package cs321.btree;
 
 public class BTreeNode {
   

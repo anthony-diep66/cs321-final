@@ -124,7 +124,7 @@ public class TreeObject{
      * returns this object's data as a long
      * @return
      */
-    long getDataAsLong(){
+    public long getDataAsLong(){
         return this.data;
     }
 

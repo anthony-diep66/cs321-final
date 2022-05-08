@@ -1,10 +1,10 @@
-/*package cs321.create;
+package cs321.create;
 
 import cs321.btree.BTree;
 import cs321.btree.BTreeNode;
 import cs321.btree.TreeObject;
 import cs321.common.ParseArgumentException;
-*/
+
 
 
 import java.io.*;
@@ -192,8 +192,4 @@ public class GeneBankCreateBTree
     }
 }
 
-
-
-/*SOURCES TO BE ADDED TO README FILE*/
-//https://stackoverflow.com/questions/19183423/why-cant-i-access-the-first-token-returned-from-javas-stringtokenizer
 
