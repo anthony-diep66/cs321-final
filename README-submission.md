@@ -4,7 +4,7 @@ Last Name       | First Name      | GitHub User Name
 --------------- | --------------- | --------------------
 Weber           | Zachry          | zachry-weber
 TBD             | TBD             | TBD
-TBD             | TBD             | TBD
+Nguyen          | Tri             | triducnguyen
 TBD             | TBD             | TBD
 TBD             | TBD             | TBD
 
