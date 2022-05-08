@@ -2,7 +2,7 @@
 
 Last Name       | First Name      | GitHub User Name
 --------------- | --------------- | --------------------
-TBD             | TBD             | TBD
+Weber           | Zachry          | zachry-weber
 TBD             | TBD             | TBD
 TBD             | TBD             | TBD
 TBD             | TBD             | TBD
